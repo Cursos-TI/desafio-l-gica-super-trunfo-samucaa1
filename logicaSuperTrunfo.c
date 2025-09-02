@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 int main() {
-
     // Carta 1
     char estado1;
     char codigo1[4];
@@ -126,19 +125,84 @@ int main() {
     printf("Densidade Populacional: %.2f hab/km²\n", densidadepopulacional2);
     printf("PIB per Capita: %.2f reais\n", pibpercapita2);
 
-    // ===============================
-    // Comparação de um único atributo
-    // ===============================
+    // ================================
+    // Menu de escolha dos dois atributos
+    // ================================
+    int escolha1, escolha2;
+    float valor1_c1 = 0, valor1_c2 = 0;
+    float valor2_c1 = 0, valor2_c2 = 0;
 
-    // Escolha do atributo (aqui está PIB per capita, mas pode trocar por outro)
-    printf("\n--- Comparação ---\n");
-    printf("Comparação de cartas (Atributo: PIB per Capita)\n");
-    printf("Carta 1 - %s: %.2f reais\n", nome1, pibpercapita1);
-    printf("Carta 2 - %s: %.2f reais\n", nome2, pibpercapita2);
+    printf("\n--- MENU DE ATRIBUTOS ---\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("3 - PIB\n");
+    printf("4 - Pontos Turísticos\n");
+    printf("5 - Densidade Populacional\n");
+    printf("6 - PIB per Capita\n");
 
-    if (pibpercapita1 > pibpercapita2)
+    printf("\nEscolha o primeiro atributo: ");
+    scanf("%d", &escolha1);
+
+    printf("Escolha o segundo atributo (diferente do primeiro): ");
+    scanf("%d", &escolha2);
+
+    // Verificação para não permitir atributos iguais
+    if (escolha1 == escolha2) {
+        printf("Erro: Você não pode escolher o mesmo atributo duas vezes!\n");
+        return 1;
+    }
+
+    // Switch para o primeiro atributo
+    switch (escolha1) {
+        case 1: valor1_c1 = populacao1; valor1_c2 = populacao2; break;
+        case 2: valor1_c1 = area1; valor1_c2 = area2; break;
+        case 3: valor1_c1 = pib1; valor1_c2 = pib2; break;
+        case 4: valor1_c1 = pontosturisticos1; valor1_c2 = pontosturisticos2; break;
+        case 5: valor1_c1 = densidadepopulacional1; valor1_c2 = densidadepopulacional2; break;
+        case 6: valor1_c1 = pibpercapita1; valor1_c2 = pibpercapita2; break;
+        default: printf("Opção inválida!\n"); return 1;
+    }
+
+    // Switch para o segundo atributo
+    switch (escolha2) {
+        case 1: valor2_c1 = populacao1; valor2_c2 = populacao2; break;
+        case 2: valor2_c1 = area1; valor2_c2 = area2; break;
+        case 3: valor2_c1 = pib1; valor2_c2 = pib2; break;
+        case 4: valor2_c1 = pontosturisticos1; valor2_c2 = pontosturisticos2; break;
+        case 5: valor2_c1 = densidadepopulacional1; valor2_c2 = densidadepopulacional2; break;
+        case 6: valor2_c1 = pibpercapita1; valor2_c2 = pibpercapita2; break;
+        default: printf("Opção inválida!\n"); return 1;
+    }
+
+    // ================================
+    // Comparação dos atributos
+    // ================================
+    int pontos_c1 = 0, pontos_c2 = 0;
+
+    // Comparação do primeiro atributo
+    if (escolha1 == 5) { // densidade → menor vence
+        (valor1_c1 < valor1_c2) ? pontos_c1++ : (valor1_c2 < valor1_c1) ? pontos_c2++ : 0;
+    } else {
+        (valor1_c1 > valor1_c2) ? pontos_c1++ : (valor1_c2 > valor1_c1) ? pontos_c2++ : 0;
+    }
+
+    // Comparação do segundo atributo
+    if (escolha2 == 5) { // densidade → menor vence
+        (valor2_c1 < valor2_c2) ? pontos_c1++ : (valor2_c2 < valor2_c1) ? pontos_c2++ : 0;
+    } else {
+        (valor2_c1 > valor2_c2) ? pontos_c1++ : (valor2_c2 > valor2_c1) ? pontos_c2++ : 0;
+    }
+
+    // ================================
+    // Exibição do resultado final
+    // ================================
+    printf("\n--- RESULTADO FINAL ---\n");
+    printf("Carta 1 (%s) - Pontos: %d\n", nome1, pontos_c1);
+    printf("Carta 2 (%s) - Pontos: %d\n", nome2, pontos_c2);
+
+    if (pontos_c1 > pontos_c2)
         printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
-    else if (pibpercapita2 > pibpercapita1)
+    else if (pontos_c2 > pontos_c1)
         printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
     else
         printf("Resultado: Empate!\n");
